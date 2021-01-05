@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B574BF3A-0EF7-44EA-8D10-DA2677562596}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{780F4C8E-8FB9-4019-9C0D-30997A9CC561}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzinek.DependencyInjection", "src\Juzinek.DependencyInjection\Juzinek.DependencyInjection.csproj", "{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzinek.DependencyInjection.Tests", "test\Juzinek.DependencyInjection.Tests\Juzinek.DependencyInjection.Tests.csproj", "{5E95ACD4-EFE1-4414-8287-3E6D898A6144}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF} = {B574BF3A-0EF7-44EA-8D10-DA2677562596}
+		{5E95ACD4-EFE1-4414-8287-3E6D898A6144} = {780F4C8E-8FB9-4019-9C0D-30997A9CC561}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {662B9397-A0C2-4EFE-89EE-51A614C216AB}
+	EndGlobalSection
+EndGlobal
