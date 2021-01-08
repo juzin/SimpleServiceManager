@@ -10,14 +10,57 @@ namespace Juzinek.DependencyInjection.Tests
     public class SimpleServiceManagerTest
     {
         [TestMethod]
-        public void InitializeTransientServiceTest()
+        public void InitializeTransientServiceWithInterfaceTest()
         {
+            //Arrange
             var serviceManager = new SimpleServiceManager();
             serviceManager
                 .AddTransient<IFooServiceOne, FooServiceOne>()
                 .BuildServiceProvider();
 
+            //Act
             var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            
+            //Assert
+            Assert.IsNotNull(serviceOne);
+            Assert.AreEqual(10, serviceOne.GetTen());
+        }
+
+        [TestMethod]
+        public void InitializeTransientServiceTest()
+        {
+            var serviceManager = new SimpleServiceManager();
+            serviceManager
+                .AddTransient<FooServiceOne>()
+                .BuildServiceProvider();
+
+            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            Assert.IsNotNull(serviceOne);
+            Assert.AreEqual(10, serviceOne.GetTen());
+        }
+
+        [TestMethod]
+        public void InitializeSingletonServiceWithInterfaceTest()
+        {
+            var serviceManager = new SimpleServiceManager();
+            serviceManager
+                .AddSingleton<IFooServiceOne, FooServiceOne>()
+                .BuildServiceProvider();
+
+            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            Assert.IsNotNull(serviceOne);
+            Assert.AreEqual(10, serviceOne.GetTen());
+        }
+
+        [TestMethod]
+        public void InitializeSingletonServiceWithSpecificInstanceTest()
+        {
+            var serviceManager = new SimpleServiceManager();
+            serviceManager
+                .AddSingleton(new FooServiceOne())
+                .BuildServiceProvider();
+
+            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -27,10 +70,10 @@ namespace Juzinek.DependencyInjection.Tests
         {
             var serviceManager = new SimpleServiceManager();
             serviceManager
-                .AddSingleton<IFooServiceOne, FooServiceOne>()
+                .AddSingleton<FooServiceOne>()
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
