@@ -1,4 +1,4 @@
-﻿namespace Juzinek.DependencyInjection.Tests.ServiceMocks
+﻿namespace Juzin.DependencyInjection.Tests.ServiceMocks
 {
     public class FooServiceOne : IFooServiceOne
     {

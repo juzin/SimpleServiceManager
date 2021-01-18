@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace Juzinek.DependencyInjection.Tests.ServiceMocks
+namespace Juzin.DependencyInjection.Tests.ServiceMocks
 {
     public class FooServiceTwo : IFooServiceTwo
     {

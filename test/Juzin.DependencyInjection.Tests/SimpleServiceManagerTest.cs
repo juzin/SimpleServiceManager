@@ -1,10 +1,10 @@
-using Juzinek.DependencyInjection.Tests.ServiceMocks;
+using Juzin.DependencyInjection.Tests.ServiceMocks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Juzinek.DependencyInjection.Tests
+namespace Juzin.DependencyInjection.Tests
 {
     [TestClass]
     public class SimpleServiceManagerTest
@@ -32,6 +32,36 @@ namespace Juzinek.DependencyInjection.Tests
             var serviceManager = new SimpleServiceManager();
             serviceManager
                 .AddTransient<FooServiceOne>()
+                .BuildServiceProvider();
+
+            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            Assert.IsNotNull(serviceOne);
+            Assert.AreEqual(10, serviceOne.GetTen());
+        }
+
+        [TestMethod]
+        public void InitializeScopedServiceWithInterfaceTest()
+        {
+            //Arrange
+            var serviceManager = new SimpleServiceManager();
+            serviceManager
+                .AddScoped<IFooServiceOne, FooServiceOne>()
+                .BuildServiceProvider();
+
+            //Act
+            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+
+            //Assert
+            Assert.IsNotNull(serviceOne);
+            Assert.AreEqual(10, serviceOne.GetTen());
+        }
+
+        [TestMethod]
+        public void InitializeScopedServiceTest()
+        {
+            var serviceManager = new SimpleServiceManager();
+            serviceManager
+                .AddScoped<FooServiceOne>()
                 .BuildServiceProvider();
 
             var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();

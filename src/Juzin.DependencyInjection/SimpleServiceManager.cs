@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Juzinek.DependencyInjection
+namespace Juzin.DependencyInjection
 {
     /// <summary>
     /// Simple Microsoft.Extensions.DependencyInjection wrapper combining ServiceCollection, ServiceProvider, ConfigurationBuilder
@@ -72,6 +72,25 @@ namespace Juzinek.DependencyInjection
         {
             IsServicesProviderNotBuild();
             _serviceCollection.AddTransient<TService>();
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public ISimpleServiceManager AddScoped<TService, TImplementation>()
+            where TService : class
+            where TImplementation : class, TService
+        {
+            IsServicesProviderNotBuild();
+            _serviceCollection.AddScoped<TService, TImplementation>();
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public ISimpleServiceManager AddScoped<TService>()
+            where TService : class
+        {
+            IsServicesProviderNotBuild();
+            _serviceCollection.AddScoped<TService>();
             return this;
         }
 

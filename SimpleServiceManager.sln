@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B574BF3A-0EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{780F4C8E-8FB9-4019-9C0D-30997A9CC561}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzinek.DependencyInjection", "src\Juzinek.DependencyInjection\Juzinek.DependencyInjection.csproj", "{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzin.DependencyInjection", "src\Juzin.DependencyInjection\Juzin.DependencyInjection.csproj", "{A46AD62F-5F76-4CB1-BED8-4988BD8836A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzinek.DependencyInjection.Tests", "test\Juzinek.DependencyInjection.Tests\Juzinek.DependencyInjection.Tests.csproj", "{5E95ACD4-EFE1-4414-8287-3E6D898A6144}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Juzin.DependencyInjection.Tests", "test\Juzin.DependencyInjection.Tests\Juzin.DependencyInjection.Tests.csproj", "{007DCCB6-B676-4B91-A199-ACE772789BAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,21 +17,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E95ACD4-EFE1-4414-8287-3E6D898A6144}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A46AD62F-5F76-4CB1-BED8-4988BD8836A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A46AD62F-5F76-4CB1-BED8-4988BD8836A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A46AD62F-5F76-4CB1-BED8-4988BD8836A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A46AD62F-5F76-4CB1-BED8-4988BD8836A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007DCCB6-B676-4B91-A199-ACE772789BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007DCCB6-B676-4B91-A199-ACE772789BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007DCCB6-B676-4B91-A199-ACE772789BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007DCCB6-B676-4B91-A199-ACE772789BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8166C37D-03AB-4BFA-B1D1-48A49BE118EF} = {B574BF3A-0EF7-44EA-8D10-DA2677562596}
-		{5E95ACD4-EFE1-4414-8287-3E6D898A6144} = {780F4C8E-8FB9-4019-9C0D-30997A9CC561}
+		{A46AD62F-5F76-4CB1-BED8-4988BD8836A7} = {B574BF3A-0EF7-44EA-8D10-DA2677562596}
+		{007DCCB6-B676-4B91-A199-ACE772789BAB} = {780F4C8E-8FB9-4019-9C0D-30997A9CC561}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {662B9397-A0C2-4EFE-89EE-51A614C216AB}

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Juzinek.DependencyInjection\Juzinek.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\src\Juzin.DependencyInjection\Juzin.DependencyInjection.csproj" />
   </ItemGroup>
 
   <ItemGroup>
