@@ -113,11 +113,11 @@ namespace Juzin.DependencyInjection.Tests
         {
             var serviceManager = new SimpleServiceManager();
             serviceManager
-                .Configure(c => 
+                .Configure(c =>
                 {
                     c.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
-                })
-                .AddTransient<IFooServiceOne, FooServiceOne>()
+                });
+            serviceManager.AddTransient<IFooServiceOne, FooServiceOne>()
                 .ConfigureServices(s => 
                 {
                     s.AddTransient<IFooServiceTwo, FooServiceTwo>();

@@ -95,7 +95,7 @@ namespace Juzin.DependencyInjection
         }
 
         /// <inheritdoc/>
-        public ISimpleServiceManager Configure(Action<IConfigurationBuilder> configureBuilderAction)
+        public IConfigurationRoot Configure(Action<IConfigurationBuilder> configureBuilderAction)
         {
             if (configureBuilderAction is null)
             {
@@ -104,7 +104,9 @@ namespace Juzin.DependencyInjection
 
             IsServicesProviderNotBuild();
             configureBuilderAction.Invoke(_configurationBuilder);
-            return this;
+            var configuration = _configurationBuilder.Build();
+            _serviceCollection.AddSingleton<IConfiguration>(configuration);
+            return configuration;
         }
 
         /// <inheritdoc/>
@@ -123,7 +125,6 @@ namespace Juzin.DependencyInjection
         public void BuildServiceProvider()
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddSingleton<IConfiguration>(_configurationBuilder.Build());
             _serviceProvider = _serviceCollection.BuildServiceProvider();
         }
 
