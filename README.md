@@ -14,7 +14,7 @@ var serviceTwo = serviceManager.GetService<IFooServiceTwo>(); //Gets service, if
 ```
 # Configuration
 ```cs
-//Add appsettings.json to IConfiguration
+//Add appsettings.json to cofiguration builds and returns IConfiguration
 serviceManager
     .Configure(c => 
     {

@@ -73,8 +73,8 @@ namespace Juzin.DependencyInjection
         /// Action delegate for configuring IConfigurationBuilder
         /// </summary>
         /// <param name="configureBuilderAction">IConfigurationBuilder action</param>
-        /// <returns></returns>
-        ISimpleServiceManager Configure(Action<IConfigurationBuilder> configureBuilderAction);
+        /// <returns>Builded <see cref="IConfigurationRoot"/></returns>
+        IConfigurationRoot Configure(Action<IConfigurationBuilder> configureBuilderAction);
 
         /// <summary>
         /// Convenient service configuration using eg. existing IServiceCollection extensions

@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Juzinek</Authors>
+    <Authors>Juzin</Authors>
     <Description>Simple DI wrapper combining ServiceCollection, ServiceProvider, ConfigurationBuilder.</Description>
-    <RepositoryUrl>https://github.com/juzin/SimpleServiceManager</RepositoryUrl>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Juzinek.DependencyInjection.xml</DocumentationFile>
+    <RepositoryUrl>https://github.com/juzin/SimpleServiceManager.git</RepositoryUrl>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Juzin.DependencyInjection.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +13,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.10" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.11" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.11" />
   </ItemGroup>
 
 </Project>
