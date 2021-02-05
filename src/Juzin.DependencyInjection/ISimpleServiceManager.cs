@@ -70,23 +70,38 @@ namespace Juzin.DependencyInjection
             where TService : class;
 
         /// <summary>
-        /// Action delegate for configuring IConfigurationBuilder
+        /// Action delegate for configuring IConfigurationBuilder.
         /// </summary>
         /// <param name="configureBuilderAction">IConfigurationBuilder action</param>
         /// <returns>Builded <see cref="IConfigurationRoot"/></returns>
         IConfigurationRoot Configure(Action<IConfigurationBuilder> configureBuilderAction);
 
         /// <summary>
-        /// Convenient service configuration using eg. existing IServiceCollection extensions
+        /// Convenient service configuration using eg. existing IServiceCollection extensions.
         /// </summary>
         /// <param name="serviceCollectionAction">IServiceCollection action</param>
         /// <returns></returns>
         ISimpleServiceManager ConfigureServices(Action<IServiceCollection> serviceCollectionAction);
 
         /// <summary>
-        /// Builds service provider. After building its possible to consume services
+        /// Builds service provider and returns <see cref="IServiceProvider"/>. After building its possible to consume services.
         /// </summary>
-        void BuildServiceProvider();
+        /// <returns></returns>
+        IServiceProvider BuildServiceProvider();
+
+        /// <summary>
+        /// Builds service provider and returns <see cref="IServiceProvider"/>. After building its possible to consume services.
+        /// </summary>
+        /// <param name="validateScopes">true to perform check verifying that scoped services never gets resolved from root provider, otherwise false.</param>
+        /// <returns></returns>
+        IServiceProvider BuildServiceProvider(bool validateScopes);
+
+        /// <summary>
+        /// Builds service provider and returns <see cref="IServiceProvider"/>. After building its possible to consume services.
+        /// </summary>
+        /// <param name="options">Configures various service provider behaviors.</param>
+        /// <returns></returns>
+        IServiceProvider BuildServiceProvider(ServiceProviderOptions options);
 
         /// <summary>
         /// Get service of type T from the System.IServiceProvider.

@@ -2,7 +2,7 @@
 Simple wrapper over Microsoft.Extensions.DependencyInjection combining ServiceCollection, ServiceProvider and ConfigurationBuilder. It's useful for application types which does not support DI out of the box.
 # Usage 
 ```cs
-var serviceManager = new SimpleServiceManager();
+using var serviceManager = new SimpleServiceManager();
 serviceManager
     .AddTransient<IFooServiceOne, FooServiceOne>()
     .AddSingleton<IFooServiceTwo, FooServiceTwo>()
@@ -14,7 +14,7 @@ var serviceTwo = serviceManager.GetService<IFooServiceTwo>(); //Gets service, if
 ```
 # Configuration
 ```cs
-//Add appsettings.json to cofiguration builds and returns IConfiguration
+//Add appsettings.json to cofiguration builds and returns IConfigurationRoot
 serviceManager
     .Configure(c => 
     {
