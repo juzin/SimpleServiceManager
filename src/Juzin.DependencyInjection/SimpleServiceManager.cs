@@ -1,18 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace Juzin.DependencyInjection
 {
     /// <summary>
     /// Simple Microsoft.Extensions.DependencyInjection wrapper combining ServiceCollection, ServiceProvider, ConfigurationBuilder
     /// </summary>
-    public class SimpleServiceManager : ISimpleServiceManager
+    public class SimpleServiceManager : ISimpleServiceManager, IDisposable, IAsyncDisposable
     {
         #region Private fields
         private readonly IServiceCollection _serviceCollection;
         private readonly IConfigurationBuilder _configurationBuilder;
-        private IServiceProvider _serviceProvider;
+        private ServiceProvider _serviceProvider;
+        private bool _disposed;
         #endregion
 
         #region Constructors
@@ -122,10 +124,24 @@ namespace Juzin.DependencyInjection
         }
 
         /// <inheritdoc/>
-        public void BuildServiceProvider()
+        public IServiceProvider BuildServiceProvider()
         {
             IsServicesProviderNotBuild();
-            _serviceProvider = _serviceCollection.BuildServiceProvider();
+            return _serviceProvider = _serviceCollection.BuildServiceProvider();
+        }
+
+        /// <inheritdoc/>
+        public IServiceProvider BuildServiceProvider(bool validateScopes)
+        {
+            IsServicesProviderNotBuild();
+            return _serviceProvider = _serviceCollection.BuildServiceProvider(validateScopes);
+        }
+
+        /// <inheritdoc/>
+        public IServiceProvider BuildServiceProvider(ServiceProviderOptions options)
+        {
+            IsServicesProviderNotBuild();
+            return _serviceProvider = _serviceCollection.BuildServiceProvider(options);
         }
 
         /// <inheritdoc/>
@@ -142,6 +158,50 @@ namespace Juzin.DependencyInjection
         {
             IsServiceProviderBuild();
             return _serviceProvider.GetService<TService>();
+        }
+        #endregion
+
+        #region IDisposable members
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsyncCore();
+            Dispose(false);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc/>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _serviceProvider?.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        /// <inheritdoc/>
+        protected virtual async ValueTask DisposeAsyncCore()
+        {
+            if (_serviceProvider != null)
+            {
+                await _serviceProvider.DisposeAsync();
+            }
+
+            _serviceProvider = null;
         }
         #endregion
 
