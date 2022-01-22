@@ -54,7 +54,7 @@ namespace Juzin.DependencyInjection
             where TService : class
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddSingleton<TService>(implementationInstance);
+            _serviceCollection.AddSingleton(implementationInstance);
             return this;
         }
 
