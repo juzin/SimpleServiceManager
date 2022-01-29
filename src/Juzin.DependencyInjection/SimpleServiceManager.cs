@@ -11,20 +11,28 @@ namespace Juzin.DependencyInjection
     public class SimpleServiceManager : ISimpleServiceManager, IDisposable, IAsyncDisposable
     {
         #region Private fields
-        private readonly IServiceCollection _serviceCollection;
+
         private readonly IConfigurationBuilder _configurationBuilder;
         private ServiceProvider _serviceProvider;
         private bool _disposed;
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Service collections
+        /// </summary>
+        public IServiceCollection ServiceCollection { get; } = new ServiceCollection();
+
+        #endregion
+        
         #region Constructors
         /// <summary>
-        /// Initializes new instance of <see cref="SimpleServiceManager"/>
+        /// Initializes new instance of <see cref="SimpleServiceManager"/> class.
         /// </summary>
         public SimpleServiceManager()
         {
-            _serviceCollection = new ServiceCollection();
-            _serviceCollection.AddSingleton<ISimpleServiceManager>(this);
+            ServiceCollection.AddSingleton<ISimpleServiceManager>(this);
             _configurationBuilder = new ConfigurationBuilder();
         }
         #endregion
@@ -36,7 +44,7 @@ namespace Juzin.DependencyInjection
             where TImplementation : class, TService
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddSingleton<TService, TImplementation>();
+            ServiceCollection.AddSingleton<TService, TImplementation>();
             return this;
         }
 
@@ -45,7 +53,7 @@ namespace Juzin.DependencyInjection
             where TService : class
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddSingleton<TService>();
+            ServiceCollection.AddSingleton<TService>();
             return this;
         }
 
@@ -54,7 +62,7 @@ namespace Juzin.DependencyInjection
             where TService : class
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddSingleton(implementationInstance);
+            ServiceCollection.AddSingleton(implementationInstance);
             return this;
         }
 
@@ -64,7 +72,7 @@ namespace Juzin.DependencyInjection
             where TImplementation : class, TService
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddTransient<TService, TImplementation>();
+            ServiceCollection.AddTransient<TService, TImplementation>();
             return this;
         }
 
@@ -73,7 +81,7 @@ namespace Juzin.DependencyInjection
             where TService : class
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddTransient<TService>();
+            ServiceCollection.AddTransient<TService>();
             return this;
         }
 
@@ -83,7 +91,7 @@ namespace Juzin.DependencyInjection
             where TImplementation : class, TService
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddScoped<TService, TImplementation>();
+            ServiceCollection.AddScoped<TService, TImplementation>();
             return this;
         }
 
@@ -92,7 +100,7 @@ namespace Juzin.DependencyInjection
             where TService : class
         {
             IsServicesProviderNotBuild();
-            _serviceCollection.AddScoped<TService>();
+            ServiceCollection.AddScoped<TService>();
             return this;
         }
 
@@ -107,7 +115,7 @@ namespace Juzin.DependencyInjection
             IsServicesProviderNotBuild();
             configureBuilderAction.Invoke(_configurationBuilder);
             var configuration = _configurationBuilder.Build();
-            _serviceCollection.AddSingleton<IConfiguration>(configuration);
+            ServiceCollection.AddSingleton<IConfiguration>(configuration);
             return configuration;
         }
 
@@ -119,7 +127,7 @@ namespace Juzin.DependencyInjection
                 throw new ArgumentNullException(nameof(serviceCollectionAction));
             }
             IsServicesProviderNotBuild();
-            serviceCollectionAction.Invoke(_serviceCollection);
+            serviceCollectionAction.Invoke(ServiceCollection);
             return this;
         }
 
@@ -127,21 +135,21 @@ namespace Juzin.DependencyInjection
         public IServiceProvider BuildServiceProvider()
         {
             IsServicesProviderNotBuild();
-            return _serviceProvider = _serviceCollection.BuildServiceProvider();
+            return _serviceProvider = ServiceCollection.BuildServiceProvider();
         }
 
         /// <inheritdoc/>
         public IServiceProvider BuildServiceProvider(bool validateScopes)
         {
             IsServicesProviderNotBuild();
-            return _serviceProvider = _serviceCollection.BuildServiceProvider(validateScopes);
+            return _serviceProvider = ServiceCollection.BuildServiceProvider(validateScopes);
         }
 
         /// <inheritdoc/>
         public IServiceProvider BuildServiceProvider(ServiceProviderOptions options)
         {
             IsServicesProviderNotBuild();
-            return _serviceProvider = _serviceCollection.BuildServiceProvider(options);
+            return _serviceProvider = ServiceCollection.BuildServiceProvider(options);
         }
 
         /// <inheritdoc/>
@@ -177,30 +185,32 @@ namespace Juzin.DependencyInjection
             GC.SuppressFinalize(this);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Disposes underlying service provider.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
             {
                 return;
             }
-
             if (disposing)
             {
                 _serviceProvider?.Dispose();
             }
-
             _disposed = true;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Disposes underlying service provider async.
+        /// </summary>
         protected virtual async ValueTask DisposeAsyncCore()
         {
-            if (_serviceProvider != null)
+            if (_serviceProvider is not null)
             {
                 await _serviceProvider.DisposeAsync();
             }
-
             _serviceProvider = null;
         }
         #endregion
@@ -208,7 +218,7 @@ namespace Juzin.DependencyInjection
         #region Private members
         private void IsServicesProviderNotBuild()
         {
-            if (_serviceProvider != null)
+            if (_serviceProvider is not null)
             {
                 throw new InvalidOperationException("Service provider is already build. You cannot add additional services or setup any configuration.");
             }
@@ -216,7 +226,7 @@ namespace Juzin.DependencyInjection
 
         private void IsServiceProviderBuild()
         {
-            if (_serviceProvider == null)
+            if (_serviceProvider is null)
             {
                 throw new InvalidOperationException("Service provider is not build. Call BuildServiceProvider() before calling get service from container.");
             }

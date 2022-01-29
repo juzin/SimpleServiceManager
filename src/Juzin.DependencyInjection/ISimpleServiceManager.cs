@@ -7,8 +7,13 @@ namespace Juzin.DependencyInjection
     /// <summary>
     /// Simple service manage interface
     /// </summary>
-    public interface ISimpleServiceManager
+    public interface ISimpleServiceManager : IDisposable, IAsyncDisposable
     {
+        /// <summary>
+        /// Service Collection with registered types
+        /// </summary>
+        IServiceCollection ServiceCollection { get; }
+        
         /// <summary>
         /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified Microsoft.Extensions.DependencyInjection.IServiceCollection.
         /// </summary>
@@ -73,7 +78,7 @@ namespace Juzin.DependencyInjection
         /// Action delegate for configuring IConfigurationBuilder.
         /// </summary>
         /// <param name="configureBuilderAction">IConfigurationBuilder action</param>
-        /// <returns>Builded <see cref="IConfigurationRoot"/></returns>
+        /// <returns>Created <see cref="IConfigurationRoot"/></returns>
         IConfigurationRoot Configure(Action<IConfigurationBuilder> configureBuilderAction);
 
         /// <summary>
