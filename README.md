@@ -1,6 +1,15 @@
 # SimpleServiceManager
-Simple wrapper over Microsoft.Extensions.DependencyInjection combining ServiceCollection, ServiceProvider and ConfigurationBuilder. It's useful for application types which does not support DI out of the box.
-# Usage 
+Simple wrapper over Microsoft.Extensions.DependencyInjection combining ServiceCollection, ServiceProvider and ConfigurationBuilder. It's useful for application types which does not support DI out of the box (console applications, unit tests, ...). Supports projects targeting .NET6 framework.
+
+## SDK
+.NET6 https://dotnet.microsoft.com/en-us/download/visual-studio-sdks
+
+# Getting Started
+
+## Usage
+- Service provider can be build only once by calling BuildServiceProvider() method, for direct acccess use ServiceCollection property
+- Implements IDisposable and IAsyncDisposable interfaces for disposing of underlaying service provider
+
 ```cs
 using var serviceManager = new SimpleServiceManager();
 serviceManager
@@ -12,7 +21,7 @@ serviceManager
 var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>(); //Gets service, if service does not exist throws exception
 var serviceTwo = serviceManager.GetService<IFooServiceTwo>(); //Gets service, if service does not exist returns null
 ```
-# Configuration
+### Configure services
 ```cs
 //Add appsettings.json to cofiguration builds and returns IConfigurationRoot
 serviceManager
@@ -21,11 +30,18 @@ serviceManager
         c.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
     });
 
-//Convenient direct access to IServiceCollection, can be used with existing IServiceCollection extensions
+//Convenient access to IServiceCollection, can be used with existing IServiceCollection extensions
 serviceManager
     .ConfigureServices(s => 
     {
         s.AddHttpClient();
     });
+
+//Directly exposed IServiceCollection
+serviceManager.ServiceCollection   
 ```
-## 
+
+## Tests
+```bash
+dotnet test
+```

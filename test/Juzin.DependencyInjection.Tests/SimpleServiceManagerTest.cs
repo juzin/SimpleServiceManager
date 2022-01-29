@@ -9,17 +9,30 @@ namespace Juzin.DependencyInjection.Tests
     [TestClass]
     public class SimpleServiceManagerTest
     {
+        private ISimpleServiceManager _serviceManager;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _serviceManager = new SimpleServiceManager();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            _serviceManager.Dispose();
+        }
+        
         [TestMethod]
         public void InitializeTransientServiceWithInterfaceTest()
         {
             //Arrange
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddTransient<IFooServiceOne, FooServiceOne>()
                 .BuildServiceProvider();
 
             //Act
-            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<IFooServiceOne>();
             
             //Assert
             Assert.IsNotNull(serviceOne);
@@ -29,12 +42,11 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void InitializeTransientServiceTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddTransient<FooServiceOne>()
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -43,13 +55,12 @@ namespace Juzin.DependencyInjection.Tests
         public void InitializeScopedServiceWithInterfaceTest()
         {
             //Arrange
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddScoped<IFooServiceOne, FooServiceOne>()
                 .BuildServiceProvider();
 
             //Act
-            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<IFooServiceOne>();
 
             //Assert
             Assert.IsNotNull(serviceOne);
@@ -59,12 +70,11 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void InitializeScopedServiceTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddScoped<FooServiceOne>()
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -72,12 +82,11 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void InitializeSingletonServiceWithInterfaceTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddSingleton<IFooServiceOne, FooServiceOne>()
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<IFooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<IFooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -85,12 +94,11 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void InitializeSingletonServiceWithSpecificInstanceTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddSingleton(new FooServiceOne())
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -98,12 +106,11 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void InitializeSingletonServiceTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .AddSingleton<FooServiceOne>()
                 .BuildServiceProvider();
 
-            var serviceOne = serviceManager.GetRequiredService<FooServiceOne>();
+            var serviceOne = _serviceManager.GetRequiredService<FooServiceOne>();
             Assert.IsNotNull(serviceOne);
             Assert.AreEqual(10, serviceOne.GetTen());
         }
@@ -111,20 +118,19 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void ConfigurationAndServiceInitializationSuccessfulTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager
+            _serviceManager
                 .Configure(c =>
                 {
                     c.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
                 });
-            serviceManager.AddTransient<IFooServiceOne, FooServiceOne>()
+            _serviceManager.AddTransient<IFooServiceOne, FooServiceOne>()
                 .ConfigureServices(s => 
                 {
                     s.AddTransient<IFooServiceTwo, FooServiceTwo>();
                 })
                 .BuildServiceProvider();
 
-            var serviceTwo = serviceManager.GetRequiredService<IFooServiceTwo>();
+            var serviceTwo = _serviceManager.GetRequiredService<IFooServiceTwo>();
             Assert.IsNotNull(serviceTwo);
             Assert.AreEqual(15, serviceTwo.GetFifteen());
             Assert.AreEqual(25, serviceTwo.GetTwentyFive());
@@ -133,10 +139,9 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void GetServiceForNotConfiguredServiceReturnsNullTest()
         {
-            var serviceManager = new SimpleServiceManager();
-            serviceManager.BuildServiceProvider();
+            _serviceManager.BuildServiceProvider();
 
-            var serviceTwo = serviceManager.GetService<IFooServiceTwo>();
+            var serviceTwo = _serviceManager.GetService<IFooServiceTwo>();
             Assert.IsNull(serviceTwo);
         }
 
@@ -144,18 +149,16 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void GetRequiredServiceForNotConfiguredServiceReturnsNullTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager.BuildServiceProvider();
+            _serviceManager.BuildServiceProvider();
 
-            _ = serviceManager.GetRequiredService<IFooServiceTwo>();
+            _ = _serviceManager.GetRequiredService<IFooServiceTwo>();
         }
 
         [ExpectedException(typeof(InvalidOperationException))]
         [TestMethod]
         public void GetRequiredServiceBeforeContainerBuiltExpectedExceptionTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            _ = serviceManager
+            _ = _serviceManager
                 .GetRequiredService<IFooServiceOne>();
         }
 
@@ -163,8 +166,7 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void GetServiceBeforeContainerBuiltExpectedExceptionTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            _ = serviceManager
+            _ = _serviceManager
                 .GetService<IFooServiceOne>();
         }
 
@@ -172,10 +174,9 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void ConfigureAfterContainerBuiltExpectedExceptionTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager.BuildServiceProvider();
+            _serviceManager.BuildServiceProvider();
 
-            _ = serviceManager.Configure(c =>
+            _ = _serviceManager.Configure(c =>
             {
                 c.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
             });
@@ -185,10 +186,9 @@ namespace Juzin.DependencyInjection.Tests
         [TestMethod]
         public void ConfigureServicesAfterContainerBuiltExpectedExceptionTest()
         {
-            using var serviceManager = new SimpleServiceManager();
-            serviceManager.BuildServiceProvider();
+            _serviceManager.BuildServiceProvider();
 
-            _ = serviceManager.ConfigureServices(c =>
+            _ = _serviceManager.ConfigureServices(c =>
             {
                 c.AddTransient<IFooServiceOne, FooServiceOne>();
             });
