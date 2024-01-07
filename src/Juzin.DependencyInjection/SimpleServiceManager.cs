@@ -107,10 +107,7 @@ namespace Juzin.DependencyInjection
         /// <inheritdoc/>
         public IConfigurationRoot Configure(Action<IConfigurationBuilder> configureBuilderAction)
         {
-            if (configureBuilderAction is null)
-            {
-                throw new ArgumentNullException(nameof(configureBuilderAction));
-            }
+            ArgumentNullException.ThrowIfNull(configureBuilderAction);
 
             IsServicesProviderNotBuild();
             configureBuilderAction.Invoke(_configurationBuilder);
@@ -122,10 +119,7 @@ namespace Juzin.DependencyInjection
         /// <inheritdoc/>
         public ISimpleServiceManager ConfigureServices(Action<IServiceCollection> serviceCollectionAction)
         {
-            if (serviceCollectionAction is null)
-            {
-                throw new ArgumentNullException(nameof(serviceCollectionAction));
-            }
+            ArgumentNullException.ThrowIfNull(serviceCollectionAction);
             IsServicesProviderNotBuild();
             serviceCollectionAction.Invoke(ServiceCollection);
             return this;
